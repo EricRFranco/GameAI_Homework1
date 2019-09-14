@@ -46,66 +46,10 @@ public class SteeringBehavior : MonoBehaviour {
         agent = GetComponent<NPCController>();
         //wanderOrientation = agent.orientation;
     }
-   
 
-    public float AlignAngular()
+    protected float DynamicRotate(float radian)
     {
         float rotationAccerlation = 0;
-        float radian = target.orientation - agent.orientation;
-        //Map to (-pi,pi)
-        if (radian > 0)
-        {
-            while (radian > Mathf.PI)
-            {
-                radian -= 2*Mathf.PI;
-                
-            }
-        }
-        else
-        {
-            while(radian < -Mathf.PI)
-            {
-                radian += 2*Mathf.PI;
-                
-            }
-        }
-      
-        //Don't need rotation
-        if (Mathf.Abs(radian) < targetRadiusA)
-        {
-            agent.rotation = 0;
-        }
-        float targetAngularSpeed = 0;
-        
-        if (Mathf.Abs(radian) > slowRadiusA)
-        {
-            targetAngularSpeed = maxRotation;
-        }
-        else
-        {
-            targetAngularSpeed = maxRotation* Mathf.Abs(radian) / slowRadiusA;
-        }
-        //Check targetAngularSpeed's direction
-        targetAngularSpeed = radian < 0 ? -targetAngularSpeed : targetAngularSpeed;
-        // a = v/t
-        rotationAccerlation = (targetAngularSpeed - agent.rotation) / timeToTarget;
-        //Set rotationAccerlation = maxAngularAccerlation
-        if (Mathf.Abs(rotationAccerlation) > maxAngularAcceleration)
-        {
-            rotationAccerlation = rotationAccerlation > 0 ? maxAngularAcceleration : -maxAngularAcceleration;
-        }
-        return rotationAccerlation;
-    }
-    public float FaceAngular()
-    {
-        float rotationAccerlation = 0;
-        if (target.transform.position == agent.transform.position)
-        {
-            return 0;
-        }
-        float radian = Mathf.Atan2(target.transform.position.x-agent.transform.position.x,
-            target.transform.position.z - agent.transform.position.z)
-            - agent.orientation;
         //Map to (-pi,pi)
         if (radian > 0)
         {
@@ -149,6 +93,27 @@ public class SteeringBehavior : MonoBehaviour {
             rotationAccerlation = rotationAccerlation > 0 ? maxAngularAcceleration : -maxAngularAcceleration;
         }
         return rotationAccerlation;
+    }
+
+    public float AlignAngular()
+    {
+        float radian = target.orientation - agent.orientation;
+        return DynamicRotate(radian);
+    }
+    public float FaceAngular()
+    {
+       
+        if (target.transform.position == agent.transform.position)
+        {
+            return 0;
+        }
+        float radian = Mathf.Atan2(target.transform.position.x-agent.transform.position.x,
+            target.transform.position.z - agent.transform.position.z)
+            - agent.orientation;
+       
+        return DynamicRotate(radian);
       
     }
+
+    
 }
