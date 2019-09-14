@@ -130,7 +130,7 @@ MonoBehaviour:
   orientation: 0
   rotation: 0
   maxSpeed: 4
-  phase: 0
+  mapState: 0
   label: {fileID: 0}
 --- !u!114 &114839489207466526
 MonoBehaviour:

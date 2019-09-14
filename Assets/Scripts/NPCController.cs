@@ -73,11 +73,11 @@ public class NPCController : MonoBehaviour {
 
             case 4:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fourth algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fourth algorithm Align";
                 }
 
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
+                linear = ai.Align_Linear();
+                angular = ai.Align_Angular();
                 break;
             case 5:
                 if (label) {
