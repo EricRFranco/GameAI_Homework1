@@ -86,6 +86,13 @@ public class NPCController : MonoBehaviour {
 
                 angular = ai.FaceAngular();
                 break;
+            case 6:
+                if (label)
+                {
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Sixth algorithm Wander";
+                }
+                angular = ai.Wander(out linear);
+                break;  
 
                 // ADD CASES AS NEEDED
         }

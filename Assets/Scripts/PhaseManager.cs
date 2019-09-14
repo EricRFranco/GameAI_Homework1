@@ -117,6 +117,9 @@ public class PhaseManager : MonoBehaviour {
            case 5:
                 EnterMapStateFive();
                 break;
+           case 6:
+                EnterMapStateSix();
+                break;
 
                 // ADD MORE CASES AS NEEDED
         }
@@ -172,15 +175,30 @@ public class PhaseManager : MonoBehaviour {
     {
         narrator.text = "Entering MapState Five. Align";
 
-        currentMapState = 4; // or whatever. Won't necessarily advance the phase every time
+        currentMapState = 5; // or whatever. Won't necessarily advance the phase every time
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 1);
         spawnedNPCs.Add(wolf);
         GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 5);
         hunter.transform.Rotate(new Vector3(0, 4f, 0));
         spawnedNPCs.Add(hunter);
-        previousMapState = 4;
+        previousMapState = 5;
 
     }
+
+    private void EnterMapStateSix()
+    {
+        narrator.text = "Entering MapState Five. Align";
+
+        currentMapState = 6; // or whatever. Won't necessarily advance the phase every time
+        GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 1);
+        spawnedNPCs.Add(wolf);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 6);
+       
+        spawnedNPCs.Add(hunter);
+        previousMapState = 6;
+
+    }
+
 
     // ... Etc. Etc.
 

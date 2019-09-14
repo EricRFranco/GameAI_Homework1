@@ -97,23 +97,54 @@ public class SteeringBehavior : MonoBehaviour {
 
     public float AlignAngular()
     {
+        //Calculate radian
         float radian = target.orientation - agent.orientation;
         return DynamicRotate(radian);
     }
     public float FaceAngular()
     {
-       
+        //Check whether needs to rotate
         if (target.transform.position == agent.transform.position)
         {
             return 0;
         }
+        //Calculate radian
         float radian = Mathf.Atan2(target.transform.position.x-agent.transform.position.x,
             target.transform.position.z - agent.transform.position.z)
             - agent.orientation;
-       
         return DynamicRotate(radian);
       
     }
+    public float Wander(out Vector3 linear)
+    {
+        //Helper function that change an orientation into a vector3
+        Vector3 AsVector(float orientation)
+        {
+            return new Vector3(Mathf.Sin(orientation), 0, Mathf.Cos(orientation));
+        }
+        //Find the circle of wander
+        wanderOrientation += (Random.Range(0f, 1f) - Random.Range(0f, 1f)) * wanderRate;
+        float targetOrientation = wanderOrientation + agent.orientation;
+        
+        Vector3 circleCenter = agent.position + wanderOffset * AsVector(agent.orientation);
+        agent.DrawCircle(circleCenter, wanderRadius);
+        //Find targetPosition
+        Vector3 targetPosition = circleCenter + wanderRadius * AsVector(targetOrientation);
+           
+        //Same as Face
+        if (targetPosition == agent.transform.position)
+        {
+            linear = new Vector3(0, 0, 0);
+            return 0;
+        }
+        float radian = Mathf.Atan2(targetPosition.x - agent.transform.position.x,
+            targetPosition.z - agent.transform.position.z)
+            - agent.orientation;
+        float rotationAccerlation = DynamicRotate(radian);
+        //Calculate linear
+        linear = maxAcceleration * AsVector(agent.orientation);
+        return rotationAccerlation;
 
-    
+    }
+   
 }
