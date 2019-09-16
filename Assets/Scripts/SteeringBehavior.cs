@@ -146,5 +146,54 @@ public class SteeringBehavior : MonoBehaviour {
         return rotationAccerlation;
 
     }
-   
+
+    public Vector3 Seek()
+    {
+        Vector3 linearAcc = target.position - agent.position;
+        linearAcc.Normalize();
+        linearAcc *= maxAcceleration;
+        return linearAcc;
+    }
+
+    public Vector3 Flee()
+    {
+        Vector3 linearAcc = agent.position - target.position;
+        linearAcc.Normalize();
+        linearAcc *= maxAcceleration;
+        return linearAcc;
+    }
+
+    public Vector3 Pursue()
+    {
+        // Calculate direction and distance away from target
+        Vector3 direction = target.position - agent.position;
+        float distance = direction.magnitude;
+
+        // Speed required to judge prediction threshold
+        float speed = agent.velocity.magnitude;
+
+        // Set prediction threshold based on distance away from target
+        float prediction = (speed <= distance / maxPrediction) ? maxPrediction : distance / speed;
+        // Update target position to be slightly ahead of its current path, then call Seek() on this new target position
+        target.position += target.velocity * prediction;
+
+        return Seek();
+    }
+
+    public Vector3 Evade()
+    {
+        // Calculate direction and distance away from target
+        Vector3 direction = agent.position - target.position;
+        float distance = direction.magnitude;
+
+        // Speed required to judge prediction threshold
+        float speed = agent.velocity.magnitude;
+
+        // Set prediction threshold based on distance away from target
+        float prediction = (speed <= distance / maxPrediction) ? maxPrediction : distance / speed;
+        // Update target position to be slightly ahead of its current path, then call Seek() on this new target position
+        target.position += target.velocity * prediction;
+
+        return Flee();
+    }
 }
