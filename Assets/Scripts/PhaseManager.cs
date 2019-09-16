@@ -154,14 +154,13 @@ public class PhaseManager : MonoBehaviour {
     private void EnterMapStateFour()
     {
         narrator.text = "Entering MapState Four. Align";
-       
+        previousMapState = currentMapState;
         currentMapState = 4; // or whatever. Won't necessarily advance the phase every time
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 1);
         spawnedNPCs.Add(wolf);
         GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 4);
         hunter.transform.Rotate(new Vector3(0, 2f, 0));
         spawnedNPCs.Add(hunter) ;
-        previousMapState = 4;
      
     }
 

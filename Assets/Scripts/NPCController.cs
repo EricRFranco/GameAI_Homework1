@@ -49,8 +49,8 @@ public class NPCController : MonoBehaviour {
                 // linear = ai.Pursue();   // For example
                 // angular = ai.Face();    // For example
 
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
+                linear = ai.Seek();
+                angular = ai.Face_Angular();
                 break;
 
             case 2:
@@ -87,7 +87,8 @@ public class NPCController : MonoBehaviour {
                 // linear = ai.whatever();  -- replace with the desired calls
                 // angular = ai.whatever();
                 break;
-
+            default:
+                break;
                 // ADD CASES AS NEEDED
         }
         UpdateMovement(linear, angular, Time.deltaTime);
