@@ -46,71 +46,105 @@ public class SteeringBehavior : MonoBehaviour {
         agent = GetComponent<NPCController>();
         //wanderOrientation = agent.orientation;
     }
-    public Vector3 Align_Linear()
+
+    protected float DynamicRotate(float radian)
     {
-        return new Vector3(0,0,0);
-    }
-    public float Align_Angular()
-    {
-        
         float rotationAccerlation = 0;
-        float radian = target.orientation - agent.orientation;
-       
         //Map to (-pi,pi)
         if (radian > 0)
         {
             while (radian > Mathf.PI)
             {
-                radian -= 2*Mathf.PI;
-                
+                radian -= 2 * Mathf.PI;
+
             }
         }
         else
         {
-            while(radian < -Mathf.PI)
+            while (radian < -Mathf.PI)
             {
-                radian += 2*Mathf.PI;
-                
+                radian += 2 * Mathf.PI;
+
             }
         }
-      
+
         //Don't need rotation
         if (Mathf.Abs(radian) < targetRadiusA)
         {
             agent.rotation = 0;
         }
         float targetAngularSpeed = 0;
-        
+
         if (Mathf.Abs(radian) > slowRadiusA)
         {
             targetAngularSpeed = maxRotation;
         }
         else
         {
-            targetAngularSpeed = maxRotation* Mathf.Abs(radian) / slowRadiusA;
+            targetAngularSpeed = maxRotation * Mathf.Abs(radian) / slowRadiusA;
         }
         //Check targetAngularSpeed's direction
-        if (radian < 0)
-        {
-            targetAngularSpeed *= -1;
-        }
+        targetAngularSpeed = radian < 0 ? -targetAngularSpeed : targetAngularSpeed;
         // a = v/t
         rotationAccerlation = (targetAngularSpeed - agent.rotation) / timeToTarget;
-        
         //Set rotationAccerlation = maxAngularAccerlation
         if (Mathf.Abs(rotationAccerlation) > maxAngularAcceleration)
         {
             rotationAccerlation = rotationAccerlation > 0 ? maxAngularAcceleration : -maxAngularAcceleration;
         }
-        print(rotationAccerlation);
         return rotationAccerlation;
-      
-
     }
-    public float Face_Angular()
-    {
 
-        return 1;
+    public float AlignAngular()
+    {
+        //Calculate radian
+        float radian = target.orientation - agent.orientation;
+        return DynamicRotate(radian);
+    }
+    public float FaceAngular()
+    {
+        //Check whether needs to rotate
+        if (target.transform.position == agent.transform.position)
+        {
+            return 0;
+        }
+        //Calculate radian
+        float radian = Mathf.Atan2(target.transform.position.x-agent.transform.position.x,
+            target.transform.position.z - agent.transform.position.z)
+            - agent.orientation;
+        return DynamicRotate(radian);
+      
+    }
+    public float Wander(out Vector3 linear)
+    {
+        //Helper function that change an orientation into a vector3
+        Vector3 AsVector(float orientation)
+        {
+            return new Vector3(Mathf.Sin(orientation), 0, Mathf.Cos(orientation));
+        }
+        //Find the circle of wander
+        wanderOrientation += (Random.Range(0f, 1f) - Random.Range(0f, 1f)) * wanderRate;
+        float targetOrientation = wanderOrientation + agent.orientation;
+        
+        Vector3 circleCenter = agent.position + wanderOffset * AsVector(agent.orientation);
+        agent.DrawCircle(circleCenter, wanderRadius);
+        //Find targetPosition
+        Vector3 targetPosition = circleCenter + wanderRadius * AsVector(targetOrientation);
+           
+        //Same as Face
+        if (targetPosition == agent.transform.position)
+        {
+            linear = new Vector3(0, 0, 0);
+            return 0;
+        }
+        float radian = Mathf.Atan2(targetPosition.x - agent.transform.position.x,
+            targetPosition.z - agent.transform.position.z)
+            - agent.orientation;
+        float rotationAccerlation = DynamicRotate(radian);
+        //Calculate linear
+        linear = maxAcceleration * AsVector(agent.orientation);
+        return rotationAccerlation;
+
     }
 
     public Vector3 Seek()
