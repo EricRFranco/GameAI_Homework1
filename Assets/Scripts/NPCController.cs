@@ -44,52 +44,60 @@ public class NPCController : MonoBehaviour {
                 if (label) {
                     // replace "First algorithm" with the name of the actual algorithm you're demoing
                     // do this for each phase
-                    label.text = name.Replace("(Clone)","") + "\nAlgorithm: First algorithm"; 
+                    label.text = name.Replace("(Clone)","") + "\nAlgorithm: First algorithm: Seek"; 
                 }
                 // linear = ai.Pursue();   // For example
                 // angular = ai.Face();    // For example
 
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
+                linear = ai.Seek();
+                angular = ai.FaceAngular();
                 break;
 
             case 2:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Second algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Second algorithm Flee";
                 }
 
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
+                linear = ai.Flee();
+                angular = 0f;
                 break;
 
             case 3:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Third algorithm";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Third algorithm Pursue";
                 }
 
-                // linear = ai.whatever();  -- replace with the desired calls
-                // angular = ai.whatever();
+                linear = ai.Pursue();
+                angular = 0f;
                 break;
 
             case 4:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fourth algorithm Align";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fourth algorithm Evade";
                 }
 
-              
-                angular = ai.AlignAngular();
+                linear = ai.Evade();
+                angular = 0f;
                 break;
             case 5:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fifth algorithm Face";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fifth algorithm Align";
                 }
-
-                angular = ai.FaceAngular();
+                linear = Vector3.zero;
+                angular = ai.AlignAngular();
                 break;
             case 6:
                 if (label)
                 {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Sixth algorithm Wander";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Sixth algorithm Face";
+                }
+                linear = Vector3.zero;
+                angular = ai.FaceAngular();
+                break;
+            case 7:
+                if (label)
+                {
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Seventh algorithm Wander";
                 }
                 angular = ai.Wander(out linear);
                 break;  
