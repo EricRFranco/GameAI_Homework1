@@ -46,5 +46,70 @@ public class SteeringBehavior : MonoBehaviour {
         agent = GetComponent<NPCController>();
         //wanderOrientation = agent.orientation;
     }
+    public Vector3 Align_Linear()
+    {
+        return new Vector3(0,0,0);
+    }
+    public float Align_Angular()
+    {
+        
+        float rotationAccerlation = 0;
+        float radian = target.orientation - agent.orientation;
+       
+        //Map to (-pi,pi)
+        if (radian > 0)
+        {
+            while (radian > Mathf.PI)
+            {
+                radian -= 2*Mathf.PI;
+                
+            }
+        }
+        else
+        {
+            while(radian < -Mathf.PI)
+            {
+                radian += 2*Mathf.PI;
+                
+            }
+        }
+      
+        //Don't need rotation
+        if (Mathf.Abs(radian) < targetRadiusA)
+        {
+            agent.rotation = 0;
+        }
+        float targetAngularSpeed = 0;
+        
+        if (Mathf.Abs(radian) > slowRadiusA)
+        {
+            targetAngularSpeed = maxRotation;
+        }
+        else
+        {
+            targetAngularSpeed = maxRotation* Mathf.Abs(radian) / slowRadiusA;
+        }
+        //Check targetAngularSpeed's direction
+        if (radian < 0)
+        {
+            targetAngularSpeed *= -1;
+        }
+        // a = v/t
+        rotationAccerlation = (targetAngularSpeed - agent.rotation) / timeToTarget;
+        
+        //Set rotationAccerlation = maxAngularAccerlation
+        if (Mathf.Abs(rotationAccerlation) > maxAngularAcceleration)
+        {
+            rotationAccerlation = rotationAccerlation > 0 ? maxAngularAcceleration : -maxAngularAcceleration;
+        }
+        print(rotationAccerlation);
+        return rotationAccerlation;
+      
 
+    }
+    public float Face_Angular()
+    {
+
+        return 1;
+    }
 }
