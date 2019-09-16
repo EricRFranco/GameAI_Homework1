@@ -112,4 +112,47 @@ public class SteeringBehavior : MonoBehaviour {
 
         return 1;
     }
+
+    public Vector3 Seek()
+    {
+        Vector3 linearAcc = target.position - agent.position;
+        linearAcc.Normalize();
+        linearAcc *= maxAcceleration;
+        //float angular = 0f;
+        return linearAcc;
+    }
+
+    public Vector3 Flee()
+    {
+        Vector3 linearAcc = agent.position - target.position;
+        linearAcc.Normalize();
+        linearAcc *= maxAcceleration;
+        return linearAcc;
+    }
+
+    public Vector3 Pursue()
+    {
+        Vector3 direction = target.position - agent.position;
+        float distance = direction.magnitude;
+
+        float speed = agent.velocity.magnitude;
+
+        float prediction = (speed <= distance / maxPrediction) ? maxPrediction : distance / speed;
+        target.position += target.velocity * prediction;
+
+        return Seek();
+    }
+
+    public Vector3 Evade()
+    {
+        Vector3 direction = agent.position - target.position;
+        float distance = direction.magnitude;
+
+        float speed = agent.velocity.magnitude;
+
+        float prediction = (speed <= distance / maxPrediction) ? maxPrediction : distance / speed;
+        target.position += target.velocity * prediction;
+
+        return Flee();
+    }
 }
