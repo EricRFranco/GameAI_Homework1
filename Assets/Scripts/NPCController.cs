@@ -59,7 +59,7 @@ public class NPCController : MonoBehaviour {
                 }
 
                 linear = ai.Flee();
-                angular = 0f;
+                angular = ai.FaceAngular();
                 break;
 
             case 3:
@@ -68,7 +68,7 @@ public class NPCController : MonoBehaviour {
                 }
 
                 linear = ai.Pursue();
-                angular = 0f;
+                angular = ai.FaceAngular();
                 break;
 
             case 4:
@@ -77,7 +77,7 @@ public class NPCController : MonoBehaviour {
                 }
 
                 linear = ai.Evade();
-                angular = 0f;
+                angular = ai.FaceAngular();
                 break;
             case 5:
                 if (label) {
