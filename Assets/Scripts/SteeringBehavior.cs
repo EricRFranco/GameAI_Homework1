@@ -177,7 +177,29 @@ public class SteeringBehavior : MonoBehaviour {
         // Update target position to be slightly ahead of its current path, then call Seek() on this new target position
         target.position += target.velocity * prediction;
 
-        return Seek();
+        return Arrive();
+    }
+
+    public Vector3 Arrive()
+    {
+        Vector3 direction = target.position - agent.position;
+        float distance = direction.magnitude;
+
+        if (distance < targetRadiusL)
+            return Vector3.zero;
+
+        float targetSpeed = (distance > slowRadiusL) ? maxSpeed : maxSpeed * distance / slowRadiusA;
+
+        Vector3 targetVelocity = direction.normalized * targetSpeed;
+        Vector3 linearAcc = (targetVelocity - agent.velocity) / timeToTarget;
+
+        if (linearAcc.magnitude > maxAcceleration)
+        {
+            linearAcc.Normalize();
+            linearAcc *= maxAcceleration;
+        }
+
+        return linearAcc;
     }
 
     public Vector3 Evade()
