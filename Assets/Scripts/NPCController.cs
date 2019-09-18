@@ -81,7 +81,7 @@ public class NPCController : MonoBehaviour {
                 break;
             case 5:
                 if (label) {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fifth algorithm\nAlign the Wolf";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Fifth algorithm Align";
                 }
                 linear = Vector3.zero;
                 angular = ai.AlignAngular();
@@ -89,7 +89,7 @@ public class NPCController : MonoBehaviour {
             case 6:
                 if (label)
                 {
-                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Sixth algorithm\nFace the Wolf";
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Sixth algorithm Face";
                 }
                 linear = Vector3.zero;
                 angular = ai.FaceAngular();
