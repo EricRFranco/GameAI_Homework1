@@ -67,13 +67,13 @@ public class SteeringBehavior : MonoBehaviour {
 
             }
         }
-
+        float targetAngularSpeed = 0;
         //Don't need rotation
+
         if (Mathf.Abs(radian) < targetRadiusA)
         {
-            agent.rotation = 0;
+            targetAngularSpeed = 0;
         }
-        float targetAngularSpeed = 0;
 
         if (Mathf.Abs(radian) > slowRadiusA)
         {
@@ -185,13 +185,16 @@ public class SteeringBehavior : MonoBehaviour {
     {
         Vector3 direction = target.position - agent.position;
         float distance = direction.magnitude;
+        float targetSpeed = 0;
         if (distance < targetRadiusL)
         {
-            agent.velocity = Vector3.zero;
-            return Vector3.zero;
-        }        
-
-        float targetSpeed = (distance > slowRadiusL) ? maxSpeed : maxSpeed * distance / slowRadiusA;
+            targetSpeed = 0;
+        }
+        else
+        {
+            targetSpeed = (distance > slowRadiusL) ? maxSpeed : maxSpeed * distance / slowRadiusA;
+        }
+ 
 
         Vector3 targetVelocity = direction.normalized * targetSpeed;
         Vector3 linearAcc = (targetVelocity - agent.velocity) / timeToTarget;
