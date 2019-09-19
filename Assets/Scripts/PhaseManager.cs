@@ -58,7 +58,7 @@ public class PhaseManager : MonoBehaviour {
     void Start() {
         narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\"";
         spawnedNPCs = new List<GameObject>();
-        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText2, 0 ));
+        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 0 ));
 
         //Invoke("SpawnWolf", 12);
         //Invoke("Meeting1", 30);
@@ -146,7 +146,7 @@ public class PhaseManager : MonoBehaviour {
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 0); // Add wolf
         spawnedNPCs.Add(wolf);
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 1);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 1);
         spawnedNPCs.Add(hunter);
         wolf.GetComponent<SteeringBehavior>().target = hunter.GetComponent<NPCController>();
     }
@@ -160,7 +160,7 @@ public class PhaseManager : MonoBehaviour {
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 2); // Add wolf
         spawnedNPCs.Add(wolf);
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 1);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 1);
         spawnedNPCs.Add(hunter);
         wolf.GetComponent<SteeringBehavior>().target = hunter.GetComponent<NPCController>();
     }
@@ -173,7 +173,7 @@ public class PhaseManager : MonoBehaviour {
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 3); // Add wolf
         spawnedNPCs.Add(wolf);
-        GameObject red = SpawnItem(spawner1, RedPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 4);
+        GameObject red = SpawnItem(spawner1, RedPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 4);
         spawnedNPCs.Add(red);
         wolf.GetComponent<SteeringBehavior>().target = red.GetComponent<NPCController>();
     }
@@ -186,7 +186,7 @@ public class PhaseManager : MonoBehaviour {
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 3); // Add wolf
         spawnedNPCs.Add(wolf);
-        GameObject red = SpawnItem(spawner1, RedPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 0);
+        GameObject red = SpawnItem(spawner1, RedPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 0);
         spawnedNPCs.Add(red);
         wolf.GetComponent<SteeringBehavior>().target = red.GetComponent<NPCController>();
 
@@ -200,7 +200,7 @@ public class PhaseManager : MonoBehaviour {
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 0);
         spawnedNPCs.Add(wolf);
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 5);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 5);
         hunter.transform.Rotate(new Vector3(0, 4f, 0));
         spawnedNPCs.Add(hunter);
      
@@ -215,7 +215,7 @@ public class PhaseManager : MonoBehaviour {
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 0);
         spawnedNPCs.Add(wolf);
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 6);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 6);
        
         spawnedNPCs.Add(hunter);
         
@@ -227,7 +227,7 @@ public class PhaseManager : MonoBehaviour {
         previousMapState = currentMapState;
         currentMapState = 7; // or whatever. Won't necessarily advance the phase every time
         ClearNPCs();
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, null, SpawnText2, 7);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 7);
 
         spawnedNPCs.Add(hunter);
        
@@ -305,5 +305,6 @@ public class PhaseManager : MonoBehaviour {
         Gizmos.DrawCube(spawner1.transform.position, spawner1.transform.localScale);
         Gizmos.DrawCube(spawner2.transform.position, spawner2.transform.localScale);
         Gizmos.DrawCube(spawner3.transform.position, spawner3.transform.localScale);
+       
     }
 }

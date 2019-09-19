@@ -40,6 +40,14 @@ public class NPCController : MonoBehaviour {
     /// </summary>
     void FixedUpdate() {
         switch (mapState) {
+            case 0:
+                if (label)
+                {
+                    // replace "First algorithm" with the name of the actual algorithm you're demoing
+                    // do this for each phase
+                    label.text = name.Replace("(Clone)", "") + "\nAlgorithm: Zero algorithm: Nothing";
+                }
+                break;
             case 1:
                 if (label) {
                     // replace "First algorithm" with the name of the actual algorithm you're demoing
