@@ -69,7 +69,7 @@ public class PhaseManager : MonoBehaviour {
     /// Unhide or spawn NPCs (agents) as needed, and give them things (like movements)
     /// to do. For each case you may well have more than one thing to do.
     /// </summary>
-    private void Update() {
+    private void Update() { //1-4 are Eric's works. 5-7 are Tony's works
 
         string inputstring = Input.inputString;
         int num;
