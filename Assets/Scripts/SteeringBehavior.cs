@@ -175,6 +175,7 @@ public class SteeringBehavior : MonoBehaviour {
         // Set prediction threshold based on distance away from target
         float prediction = (speed <= distance / maxPrediction) ? maxPrediction : distance / speed;
         // Update target position to be slightly ahead of its current path, then call Seek() on this new target position
+        agent.DrawCircle(target.position + target.velocity * prediction, 0.3f);
         target.position += target.velocity * prediction;
 
         return Arrive();
@@ -186,10 +187,9 @@ public class SteeringBehavior : MonoBehaviour {
         float distance = direction.magnitude;
         if (distance < targetRadiusL)
         {
-            agent.velocity = new Vector3(0, 0, 0);
+            agent.velocity = Vector3.zero;
             return Vector3.zero;
-        }
-           
+        }        
 
         float targetSpeed = (distance > slowRadiusL) ? maxSpeed : maxSpeed * distance / slowRadiusA;
 
