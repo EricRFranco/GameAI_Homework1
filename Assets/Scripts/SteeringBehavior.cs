@@ -47,7 +47,7 @@ public class SteeringBehavior : MonoBehaviour {
         //wanderOrientation = agent.orientation;
     }
 
-    protected float DynamicRotate(float radian)
+    protected float DynamicRotate(float radian) //Tony's Work
     {
         float rotationAccerlation = 0;
         //Map to (-pi,pi)
@@ -95,13 +95,13 @@ public class SteeringBehavior : MonoBehaviour {
         return rotationAccerlation;
     }
 
-    public float AlignAngular()
+    public float AlignAngular() //Tony's Work
     {
         //Calculate radian
         float radian = target.orientation - agent.orientation;
         return DynamicRotate(radian);
     }
-    public float FaceAngular()
+    public float FaceAngular() //Tony's Work
     {
         //Check whether needs to rotate
         if (target.transform.position == agent.transform.position)
@@ -115,7 +115,7 @@ public class SteeringBehavior : MonoBehaviour {
         return DynamicRotate(radian);
       
     }
-    public float Wander(out Vector3 linear)
+    public float Wander(out Vector3 linear) //Tony's Work
     {
         //Helper function that change an orientation into a vector3
         Vector3 AsVector(float orientation)
@@ -147,7 +147,7 @@ public class SteeringBehavior : MonoBehaviour {
 
     }
 
-    public Vector3 Seek()
+    public Vector3 Seek() //Eric's Work
     {
         Vector3 linearAcc = target.position - agent.position;
         linearAcc.Normalize();
@@ -155,7 +155,7 @@ public class SteeringBehavior : MonoBehaviour {
         return linearAcc;
     }
 
-    public Vector3 Flee()
+    public Vector3 Flee() //Eric's Work
     {
         Vector3 linearAcc = agent.position - target.position;
         linearAcc.Normalize();
@@ -163,7 +163,7 @@ public class SteeringBehavior : MonoBehaviour {
         return linearAcc;
     }
 
-    public Vector3 Pursue()
+    public Vector3 Pursue() //Eric's Work
     {
         // Calculate direction and distance away from target
         Vector3 direction = target.position - agent.position;
@@ -180,13 +180,16 @@ public class SteeringBehavior : MonoBehaviour {
         return Arrive();
     }
 
-    public Vector3 Arrive()
+    public Vector3 Arrive() //Eric's Work
     {
         Vector3 direction = target.position - agent.position;
         float distance = direction.magnitude;
-
         if (distance < targetRadiusL)
+        {
+            agent.velocity = new Vector3(0, 0, 0);
             return Vector3.zero;
+        }
+           
 
         float targetSpeed = (distance > slowRadiusL) ? maxSpeed : maxSpeed * distance / slowRadiusA;
 
@@ -201,8 +204,8 @@ public class SteeringBehavior : MonoBehaviour {
 
         return linearAcc;
     }
-
-    public Vector3 Evade()
+     
+    public Vector3 Evade() //Eric's Work
     {
         // Calculate direction and distance away from target
         Vector3 direction = agent.position - target.position;

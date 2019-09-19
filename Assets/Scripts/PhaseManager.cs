@@ -58,7 +58,7 @@ public class PhaseManager : MonoBehaviour {
     void Start() {
         narrator.text = "This is the place to mention major things going on during the demo, the \"narration.\"";
         spawnedNPCs = new List<GameObject>();
-        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 0 ));
+        spawnedNPCs.Add(SpawnItem(spawner1, HunterPrefab, null, SpawnText2, 0 ));
 
         //Invoke("SpawnWolf", 12);
         //Invoke("Meeting1", 30);
@@ -69,7 +69,7 @@ public class PhaseManager : MonoBehaviour {
     /// Unhide or spawn NPCs (agents) as needed, and give them things (like movements)
     /// to do. For each case you may well have more than one thing to do.
     /// </summary>
-    private void Update() {
+    private void Update() { //1-4 are Eric's works. 5-7 are Tony's works
 
         string inputstring = Input.inputString;
         int num;
@@ -173,7 +173,7 @@ public class PhaseManager : MonoBehaviour {
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 3); // Add wolf
         spawnedNPCs.Add(wolf);
-        GameObject red = SpawnItem(spawner1, RedPrefab, wolf.GetComponent<NPCController>(), SpawnText3, 4);
+        GameObject red = SpawnItem(spawner1, RedPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 4);
         spawnedNPCs.Add(red);
         wolf.GetComponent<SteeringBehavior>().target = red.GetComponent<NPCController>();
     }
@@ -186,21 +186,21 @@ public class PhaseManager : MonoBehaviour {
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 3); // Add wolf
         spawnedNPCs.Add(wolf);
-        GameObject red = SpawnItem(spawner1, RedPrefab, wolf.GetComponent<NPCController>(), SpawnText3, 0);
+        GameObject red = SpawnItem(spawner1, RedPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 0);
         spawnedNPCs.Add(red);
         wolf.GetComponent<SteeringBehavior>().target = red.GetComponent<NPCController>();
 
     }
     private void EnterMapStateFive()
     {
-        narrator.text = "Entering MapState Five. Align";
+        narrator.text = "Entering MapState Five. Hunter aligns with the Wolf.";
         previousMapState = currentMapState;
         currentMapState = 5; // or whatever. Won't necessarily advance the phase every time
 
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 0);
         spawnedNPCs.Add(wolf);
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 5);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 5);
         hunter.transform.Rotate(new Vector3(0, 4f, 0));
         spawnedNPCs.Add(hunter);
      
@@ -209,13 +209,13 @@ public class PhaseManager : MonoBehaviour {
 
     private void EnterMapStateSix()
     {
-        narrator.text = "Entering MapState Six. Face";
+        narrator.text = "Entering MapState Six. Hunter faces to the Wolf.";
         previousMapState = currentMapState;
         currentMapState = 6; // or whatever. Won't necessarily advance the phase every time
         ClearNPCs();
         GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 0);
         spawnedNPCs.Add(wolf);
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText1, 6);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, wolf.GetComponent<NPCController>(), SpawnText2, 6);
        
         spawnedNPCs.Add(hunter);
         
@@ -223,11 +223,11 @@ public class PhaseManager : MonoBehaviour {
     }
     private void EnterMapStateSeven()
     {
-        narrator.text = "Entering MapState Seven. Wander";
+        narrator.text = "Entering MapState Seven. Hunter wanders";
         previousMapState = currentMapState;
         currentMapState = 7; // or whatever. Won't necessarily advance the phase every time
         ClearNPCs();
-        GameObject hunter = SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 7);
+        GameObject hunter = SpawnItem(spawner1, HunterPrefab, null, SpawnText2, 7);
 
         spawnedNPCs.Add(hunter);
        
