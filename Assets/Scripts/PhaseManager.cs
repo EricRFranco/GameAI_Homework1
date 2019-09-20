@@ -228,8 +228,10 @@ public class PhaseManager : MonoBehaviour {
         currentMapState = 7; // or whatever. Won't necessarily advance the phase every time
         ClearNPCs();
         GameObject hunter = SpawnItem(spawner1, HunterPrefab, null, SpawnText1, 7);
-
         spawnedNPCs.Add(hunter);
+        GameObject wolf = SpawnItem(spawner2, WolfPrefab, null, SpawnText2, 0);
+        spawnedNPCs.Add(wolf);
+        
        
 
     }
